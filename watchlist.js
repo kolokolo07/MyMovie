@@ -1,24 +1,18 @@
-const watchlistContainer =
-document.getElementById(
-    "watchlistContainer"
-);
+const watchlistContainer = document.getElementById("watchlistContainer");
+const statsContainer = document.getElementById("statsContainer");
 
 loadWatchlist();
 
 function loadWatchlist()
 {
-    const movies =
-    JSON.parse(
-        localStorage.getItem(
-            "watchlist"
-        )
-    ) || [];
-
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
     displayWatchlist(movies);
 }
 
 function displayWatchlist(movies)
 {
+
+    displayStats(movies);
     let html = "";
 
     movies.forEach((movie,index)=>{
@@ -108,37 +102,50 @@ function displayWatchlist(movies)
 
 function deleteMovie(index)
 {
-    const movies =
-    JSON.parse(
-        localStorage.getItem(
-            "watchlist"
-        )
-    ) || [];
-
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
     movies.splice(index,1);
-
-    localStorage.setItem(
-        "watchlist",
-        JSON.stringify(movies)
-    );
+    localStorage.setItem("watchlist",JSON.stringify(movies));
 
     loadWatchlist();
 }
 
 function updateStatus(index,status)
 {
-    const movies =
-    JSON.parse(
-        localStorage.getItem("watchlist")
-    ) || [];
-
-    movies[index].status =
-    status;
-
-    localStorage.setItem(
-        "watchlist",
-        JSON.stringify(movies)
-    );
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
+    movies[index].status = status;
+    localStorage.setItem("watchlist",JSON.stringify(movies));
 
     loadWatchlist();
+}
+
+function displayStats(movies)
+{
+    const total = movies.length;
+    const planToWatch = movies.filter(movie => movie.status == "Plan To Watch").length;
+    const watching = movies.filter(movie => movie.status == "Watching").length;
+    const finished = movies.filter(movie => movie.status == "Completed").length;
+
+    statsContainer.innerHTML =
+
+    `
+    <div class="stat-card">
+        <h3>Total Movies</h3>
+        <p>${total}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Finished Watching</h3>
+        <p>${finished}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Plan To Watch</h3>
+        <p>${planToWatch}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Currently Watching</h3>
+        <p>${watching}</p>
+    </div>
+    `;
 }
