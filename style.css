@@ -354,7 +354,6 @@ button:hover{
     margin-bottom:10px;
 }
 
-/*MOVIE PLANNER DROP DOWN*/
 .planner-card select{
     appearance:none;
     -webkit-appearance:none;
@@ -499,4 +498,66 @@ button:hover{
 
 #recommendationResult{
     margin-bottom:40px;
+}
+
+.top-header{
+    position:relative;
+    padding:60px 40px;
+    border-radius:15px;
+    border:1px solid #22462d;
+    overflow:hidden;
+    z-index:0;
+}
+
+.top-header::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:0.5;
+    z-index:-1;
+}
+
+.home-header::before{
+    background-image:url("banner1.png");
+}
+
+.watchlist-header::before{
+    background-image:url("banner2.png");
+}
+
+#statsContainer{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.stat-card{
+    background:
+    linear-gradient(
+        135deg,
+        #133c1e,
+        #0f2613
+    );
+    border:1px solid #2f7a43;
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(16,185,129,0.15);
+}
+
+.stat-card h3{
+    color:#94a3b8;
+    font-size:16px;
+    font-weight:400;
+    margin-bottom:8px;
+}
+
+.stat-card p{
+    color:#7ee787;
+    font-size:40px;
+    font-weight:500;
 }
