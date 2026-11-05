@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MyMovie</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body>
+
+    <header class="top-header">
+
+        <div class="logo">
+            <span class="my">My</span>
+            <span class="movie">Movie</span>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html" class="active-link">Home</a>
+            <a href="watchlist.html">Watchlist</a>
+        </nav>
+
+    </header>
+
+    <div class="search-section">
+        <input type="text" id="movieInput" placeholder="Search any movie...">
+        <button id="searchBtn">Search</button>
+        <button id="clearBtn" class="clear-btn">Clear</button>
+    </div>
+
+    <div class="planner-container">
+
+        <div class="planner-card">
+
+            <h2>💎 Should I Watch?</h2>
+
+            <input
+                type="text"
+                id="worthMovie"
+                placeholder="Enter movie name">
+
+            <button onclick="analyzeMovie()">
+                Analyze
+            </button>
+
+            <div id="worthResult"></div>
+
+        </div>
+
+        <div class="planner-card">
+
+            <h2>🎬 Smart Picks</h2>
+
+            <select id="plannerMood">
+                <option>Horror</option>
+                <option>Comedy</option>
+                <option>Romance</option>
+                <option>Action</option>
+                <option>Drama</option>
+                <option>Animation</option>
+                <option>Sci-Fi</option>
+                <option>Mystery</option>
+            </select>
+
+            <input
+                type="number"
+                id="plannerTime"
+                placeholder="Available Time (minutes)">
+
+            <button onclick="moviePlanner()">
+                Recommend
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="recommendationResult"></div>
+    <div id="movieResult"></div>
+    <div id="movieCollection"></div>
+
+    <script src="renderer.js"></script>
+
+</body>
+
+</html>
