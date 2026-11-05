@@ -1,58 +1,157 @@
-<!DOCTYPE html>
-<html>
+const watchlistContainer = document.getElementById("watchlistContainer");
+const statsContainer = document.getElementById("statsContainer");
 
-<head>
+loadWatchlist();
 
-    <meta charset="UTF-8"> 
+function loadWatchlist()
+{
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
+    displayWatchlist(movies);
+}
+
+function displayWatchlist(movies)
+{
+
+    displayStats(movies);
+    let html = "";
+
+    movies.forEach((movie,index)=>{
+
+        const posterUrl =
+        "https://image.tmdb.org/t/p/w500" +
+        movie.poster;
+
+        html +=
+
+        `
+        <div class="watch-card">
+
+            <img
+                src="${posterUrl}"
+                class="watch-poster">
+
+            <h2>
+                ${movie.title}
+            </h2>
+
+            <div class="watch-info">
+
+                <span class="watch-badge">
+                    Genre: ${movie.genre || "Unknown"}
+                </span>
+
+                <span class="watch-badge">
+                    Rating: ${movie.rating.toFixed(1)}
+                </span>
+
+                <div class="status-buttons">
+
+    <button
+        onclick="updateStatus(${index},'Plan To Watch')"
+        class="status-btn">
+
+        Plan
+    </button>
+
+    <button
+        onclick="updateStatus(${index},'Watching')"
+        class="status-btn">
+
+        Watching
+    </button>
+
+    <button
+        onclick="updateStatus(${index},'Completed')"
+        class="status-btn">
+
+        Completed
+    </button>
+
+</div>
+
+<p class="current-status">
+
+    Current :
+    ${movie.status}
+
+</p>
+
+</select>
+
+            </div>
+
+            <div class="watch-actions">
+
+                <button
+                    onclick="deleteMovie(${index})"
+                    class="delete-btn">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+        `;
+
+    });
+
+    watchlistContainer.innerHTML = html;
+}
+
+function deleteMovie(index)
+{
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
+    const title = movies[index].title;
+    const sure = confirm(`Are you sure you want to delete "${title}"?`);
     
-    <title>My Watchlist</title>
+    if (!sure) {
+        return;
+    }
+    
+    movies.splice(index,1);
+    localStorage.setItem("watchlist",JSON.stringify(movies));
+    loadWatchlist();
+}
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+function updateStatus(index,status)
+{
+    const movies = JSON.parse(localStorage.getItem("watchlist")) || [];
+    movies[index].status = status;
+    localStorage.setItem("watchlist",JSON.stringify(movies));
 
-</head>
+    loadWatchlist();
+}
 
-<body>
+function displayStats(movies)
+{
+    const total = movies.length;
+    const planToWatch = movies.filter(movie => movie.status == "Plan To Watch").length;
+    const watching = movies.filter(movie => movie.status == "Watching").length;
+    const finished = movies.filter(movie => movie.status == "Completed").length;
 
-    <header class="top-header watchlist-header">
+    statsContainer.innerHTML =
 
-    <div class="logo">
-
-        <span class="my">
-            My
-        </span>
-
-        <span class="movie">
-            Watchlist
-        </span>
-
+    `
+    <div class="stat-card">
+        <h3>Total Movies</h3>
+        <p>${total}</p>
     </div>
 
-    <nav class="menu">
+    <div class="stat-card">
+        <h3>Finished Watching</h3>
+        <p>${finished}</p>
+    </div>
 
-    <a href="index.html">
+    <div class="stat-card">
+        <h3>Plan To Watch</h3>
+        <p>${planToWatch}</p>
+    </div>
 
-        Home
-
-    </a>
-
-    <a
-    href="watchlist.html"
-    class="active-link">
-
-        Watchlist
-
-    </a>
-
-</nav>
-
-</header>
-
-    <div id="statsContainer"></div>
-    <div id="watchlistContainer"></div>
-
-    <script src="watchlist.js"></script>
-</body>
-
-</html>
+    <div class="stat-card">
+        <h3>Currently Watching</h3>
+        <p>${watching}</p>
+    </div>
+    `;
+}
