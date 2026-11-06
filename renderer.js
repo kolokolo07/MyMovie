@@ -1,4 +1,4 @@
-const apiKey = "f176354662a71abee3d16d8be9e39ea3";
+const apiKey = "3af5f79a1858b86b521716fcb61539f6";
 
 const searchBtn = document.getElementById("searchBtn");
 const movieResult = document.getElementById("movieResult");
